@@ -84,9 +84,9 @@ public final class VaultAutoOpener {
 
                 Text message;
                 if (isWindBurstBook) {
-                    message = Text.literal("§7В сокровищнице: §a").append(itemName).append(" §e(Wind Burst)§r");
+                    message = Text.translatable("autovault.hud.spinning_item_wind_burst", itemName);
                 } else {
-                    message = Text.literal("§7В сокровищнице: §e").append(itemName).append("§r");
+                    message = Text.translatable("autovault.hud.spinning_item", itemName);
                 }
                 player.sendMessage(message, true);
             }

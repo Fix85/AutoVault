@@ -29,7 +29,7 @@ public class AutoVaultConfigScreen extends Screen {
     private int extraCustomCount = 0;
 
     public AutoVaultConfigScreen(Screen parent) {
-        super(Text.literal("Auto Vault"));
+        super(Text.translatable("autovault.title"));
         this.parent = parent;
     }
 
@@ -41,7 +41,7 @@ public class AutoVaultConfigScreen extends Screen {
         int leftX = cx - 180;
         int colW = 110;
 
-        enabledBtn = ButtonWidget.builder(buildOnOff("Auto Vault", Config.get().enabled),
+        enabledBtn = ButtonWidget.builder(buildOnOff("autovault.gui.auto_vault", Config.get().enabled),
                 b -> {
                     Config.get().enabled = !Config.get().enabled;
                     refresh();
@@ -50,12 +50,12 @@ public class AutoVaultConfigScreen extends Screen {
                 .build();
         addDrawableChild(enabledBtn);
 
-        normalBtn = ButtonWidget.builder(buildOnOff("Normal Vaults", Config.get().openNormal),
+        normalBtn = ButtonWidget.builder(buildOnOff("autovault.gui.normal_vaults", Config.get().openNormal),
                 b -> { Config.get().openNormal = !Config.get().openNormal; refresh(); })
                 .dimensions(leftX, 80, colW, 20).build();
         addDrawableChild(normalBtn);
 
-        ominousBtn = ButtonWidget.builder(buildOnOff("Ominous Vaults", Config.get().openOminous),
+        ominousBtn = ButtonWidget.builder(buildOnOff("autovault.gui.ominous_vaults", Config.get().openOminous),
                 b -> { Config.get().openOminous = !Config.get().openOminous; refresh(); })
                 .dimensions(leftX, 105, colW, 20).build();
         addDrawableChild(ominousBtn);
@@ -65,34 +65,34 @@ public class AutoVaultConfigScreen extends Screen {
         int midX = cx - 55;
         int midW = 110;
 
-        filterBtn = ButtonWidget.builder(buildOnOff("Use Filter", Config.get().useFilter),
+        filterBtn = ButtonWidget.builder(buildOnOff("autovault.gui.use_filter", Config.get().useFilter),
                 b -> { Config.get().useFilter = !Config.get().useFilter; refresh(); })
                 .dimensions(midX, 55, midW, 20).build();
         addDrawableChild(filterBtn);
 
         int itemW = 53;
-        tridentBtn = ButtonWidget.builder(buildItemLabel("Trident", "minecraft:trident"),
+        tridentBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.trident", "minecraft:trident"),
                 b -> { toggleItem("minecraft:trident"); refresh(); })
                 .dimensions(midX, 80, itemW, 20).build();
         addDrawableChild(tridentBtn);
 
-        maceBtn = ButtonWidget.builder(buildItemLabel("Mace", "minecraft:mace"),
+        maceBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.mace", "minecraft:mace"),
                 b -> { toggleItem("minecraft:mace"); refresh(); })
                 .dimensions(midX + 57, 80, itemW, 20).build();
         addDrawableChild(maceBtn);
 
-        heavyCoreBtn = ButtonWidget.builder(buildItemLabel("Core", "minecraft:heavy_core"),
+        heavyCoreBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.core", "minecraft:heavy_core"),
                 b -> { toggleItem("minecraft:heavy_core"); refresh(); })
                 .dimensions(midX, 105, itemW, 20).build();
         addDrawableChild(heavyCoreBtn);
 
-        bookBtn = ButtonWidget.builder(buildItemLabel("Book", "minecraft:enchanted_book"),
+        bookBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.book", "minecraft:enchanted_book"),
                 b -> { toggleItem("minecraft:enchanted_book"); refresh(); })
                 .dimensions(midX + 57, 105, itemW, 20).build();
         addDrawableChild(bookBtn);
 
         boolean hasBook = Config.get().filter.contains("minecraft:enchanted_book");
-        windBurstBtn = ButtonWidget.builder(buildOnOff("Wind Burst Only", Config.get().requireWindBurstOnBook),
+        windBurstBtn = ButtonWidget.builder(buildOnOff("autovault.gui.wind_burst_only", Config.get().requireWindBurstOnBook),
                 b -> { Config.get().requireWindBurstOnBook = !Config.get().requireWindBurstOnBook; refresh(); })
                 .dimensions(midX, 130, midW, 20).build();
         windBurstBtn.active = hasBook && Config.get().useFilter;
@@ -109,7 +109,7 @@ public class AutoVaultConfigScreen extends Screen {
         customItemField.setMaxLength(64);
         addDrawableChild(customItemField);
 
-        addDrawableChild(ButtonWidget.builder(Text.literal("Add / Remove"), b -> {
+        addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.add_remove"), b -> {
             String idStr = customItemField.getText().trim().toLowerCase();
             if (idStr.isEmpty()) return;
             Identifier identifier = Identifier.tryParse(idStr);
@@ -159,9 +159,7 @@ public class AutoVaultConfigScreen extends Screen {
         }
 
         // Кнопка полной очистки
-        addDrawableChild(ButtonWidget.builder(Text.literal("Clear List"), b -> {
-            // Очищаем только кастомные элементы, либо все
-            // Очистим все кастомные элементы
+        addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.clear_list"), b -> {
             Config.get().filter.removeIf(id -> 
                 !id.equals("minecraft:trident") && !id.equals("minecraft:mace") &&
                 !id.equals("minecraft:heavy_core") && !id.equals("minecraft:enchanted_book")
@@ -172,12 +170,12 @@ public class AutoVaultConfigScreen extends Screen {
 
 
         // --- КНОПКИ ДЕЙСТВИЙ (САМЫЙ НИЗ) ---
-        addDrawableChild(ButtonWidget.builder(Text.literal("Reset to Defaults"), b -> {
+        addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.reset"), b -> {
             Config.resetToDefaults();
             refresh();
         }).dimensions(cx - 110, 205, 105, 20).build());
 
-        addDrawableChild(ButtonWidget.builder(Text.literal("Done"), b -> close())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.done"), b -> close())
                 .dimensions(cx + 5, 205, 105, 20)
                 .build());
     }
@@ -189,13 +187,15 @@ public class AutoVaultConfigScreen extends Screen {
         Config.save();
     }
 
-    private Text buildOnOff(String label, boolean value) {
-        return Text.literal(label + ": " + (value ? "§aON" : "§cOFF"));
+    private Text buildOnOff(String key, boolean value) {
+        String state = value ? "§aON" : "§cOFF";
+        return Text.translatable(key).append(": " + state);
     }
 
-    private Text buildItemLabel(String label, String id) {
+    private Text buildItemLabel(String key, String id) {
         boolean has = Config.get().filter.contains(id);
-        return Text.literal((has ? "§a✔§r " : "§c✖§r ") + label);
+        Text label = Text.translatable(key);
+        return Text.literal(has ? "§a✔§r " : "§c✖§r ").append(label);
     }
 
     private void refresh() {
@@ -217,20 +217,23 @@ public class AutoVaultConfigScreen extends Screen {
         // Заголовки над группами
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, cx, 12, 0xFFFFFF);
         
-        context.drawCenteredTextWithShadow(this.textRenderer, "§eGeneral", cx - 125, 42, 0xAAAAAA);
-        context.drawCenteredTextWithShadow(this.textRenderer, "§ePresets", cx, 42, 0xAAAAAA);
-        context.drawCenteredTextWithShadow(this.textRenderer, "§eCustom List", cx + 127, 42, 0xAAAAAA);
+        context.drawCenteredTextWithShadow(this.textRenderer, Text.translatable("autovault.gui.general"), cx - 125, 42, 0xAAAAAA);
+        context.drawCenteredTextWithShadow(this.textRenderer, Text.translatable("autovault.gui.presets"), cx, 42, 0xAAAAAA);
+        context.drawCenteredTextWithShadow(this.textRenderer, Text.translatable("autovault.gui.custom_list"), cx + 127, 42, 0xAAAAAA);
 
         if (extraCustomCount > 0) {
-            context.drawCenteredTextWithShadow(this.textRenderer, Text.literal("§7+ " + extraCustomCount + " more items"),
+            context.drawCenteredTextWithShadow(this.textRenderer, 
+                    Text.translatable("autovault.gui.more_items", String.valueOf(extraCustomCount)), 
                     cx + 127, 160, 0x888888);
         }
 
         // Текст текущего списка фильтров
-        String hint = "Active Filter: " + (Config.get().filter.isEmpty()
-                ? "(none — opens nothing)"
-                : String.join(", ", Config.get().filter));
-        context.drawCenteredTextWithShadow(this.textRenderer, Text.literal("§7" + hint),
+        String filterText = Config.get().filter.isEmpty()
+                ? Text.translatable("autovault.gui.filter_empty").getString()
+                : String.join(", ", Config.get().filter);
+        Text hintText = Text.translatable("autovault.gui.active_filter", filterText);
+        
+        context.drawCenteredTextWithShadow(this.textRenderer, Text.literal("§7").append(hintText),
                 cx, this.height - 18, 0xAAAAAA);
     }
 }

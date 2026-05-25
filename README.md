@@ -15,7 +15,6 @@ A Minecraft Fabric client-side mod that automatically opens Vaults in Trial Cham
 - **Visual Display:** Outputs the name of the currently spinning item in the focused Vault directly above your hotbar (action bar).
 - **Item Filtering:** Reads the internal item currently displayed by the Vault and only opens the Vault if the item matches your whitelist.
 - **Wind Burst Verification:** For Enchanted Books, can specifically check if the book has the `Wind Burst` enchantment before opening.
-- **Natural Interaction:** Plays the hand swinging animation upon successful interaction, making it indistinguishable from a manual right-click.
 - **Interactive GUI:** Easy configuration of target Vault types, item whitelist presets, and custom item ID support.
 
 ### Controls
@@ -45,7 +44,6 @@ The mod configuration is saved to `.minecraft/config/autovault.json` and can be 
 - **Отображение предметов:** Выводит название крутящегося предмета над вашим хотбаром (action bar) в реальном времени.
 - **Фильтрация предметов:** Считывает отображаемый предмет внутри Хранилища и производит активацию только в том случае, если этот предмет находится в белом списке.
 - **Проверка на Wind Burst (Ветровой шквал):** Для Зачарованных книг можно включить проверку наличия именно чар `Wind Burst` перед тратой ключа.
-- **Естественное взаимодействие:** Проигрывает стандартную анимацию взмаха руки при открытии, делая процесс визуально неотличимым от обычного клика мыши.
 - **Удобный интерфейс:** Полная настройка типов хранилищ, пресетов предметов и ручного добавления ID через игровое меню.
 
 ### Управление

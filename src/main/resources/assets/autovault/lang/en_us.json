@@ -1,4 +1,27 @@
 {
   "key.autovault.toggle": "Toggle Auto Vault",
-  "key.autovault.open_gui": "Open Auto Vault settings"
+  "key.autovault.open_gui": "Open Auto Vault settings",
+  "autovault.title": "Auto Vault Settings",
+  "autovault.gui.general": "General",
+  "autovault.gui.presets": "Presets",
+  "autovault.gui.custom_list": "Custom List",
+  "autovault.gui.auto_vault": "Auto Vault",
+  "autovault.gui.normal_vaults": "Normal Vaults",
+  "autovault.gui.ominous_vaults": "Ominous Vaults",
+  "autovault.gui.use_filter": "Use Filter",
+  "autovault.gui.wind_burst_only": "Wind Burst Only",
+  "autovault.gui.trident": "Trident",
+  "autovault.gui.mace": "Mace",
+  "autovault.gui.core": "Core",
+  "autovault.gui.book": "Book",
+  "autovault.gui.add_remove": "Add / Remove",
+  "autovault.gui.clear_list": "Clear List",
+  "autovault.gui.reset": "Reset to Defaults",
+  "autovault.gui.done": "Done",
+  "autovault.gui.active_filter": "Active Filter: %s",
+  "autovault.gui.filter_empty": "(none — opens nothing)",
+  "autovault.gui.more_items": "+ %s more items",
+  "autovault.hud.spinning_item": "§7In Vault: §e%s§r",
+  "autovault.hud.spinning_item_wind_burst": "§7In Vault: §a%s §e(Wind Burst)§r",
+  "autovault.chat.toggle": "[AutoVault] Auto Vault: %s"
 }

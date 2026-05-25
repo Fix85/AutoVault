@@ -1,4 +1,27 @@
 {
   "key.autovault.toggle": "Переключить Auto Vault",
-  "key.autovault.open_gui": "Открыть настройки Auto Vault"
+  "key.autovault.open_gui": "Открыть настройки Auto Vault",
+  "autovault.title": "Настройки Auto Vault",
+  "autovault.gui.general": "Общие",
+  "autovault.gui.presets": "Пресеты",
+  "autovault.gui.custom_list": "Кастомный список",
+  "autovault.gui.auto_vault": "Авто-открытие",
+  "autovault.gui.normal_vaults": "Обычные сейфы",
+  "autovault.gui.ominous_vaults": "Зловещие сейфы",
+  "autovault.gui.use_filter": "Фильтр лута",
+  "autovault.gui.wind_burst_only": "Только с Wind Burst",
+  "autovault.gui.trident": "Трезубец",
+  "autovault.gui.mace": "Булава",
+  "autovault.gui.core": "Ядро",
+  "autovault.gui.book": "Книга",
+  "autovault.gui.add_remove": "Добавить / Удалить",
+  "autovault.gui.clear_list": "Очистить список",
+  "autovault.gui.reset": "Сбросить настройки",
+  "autovault.gui.done": "Готово",
+  "autovault.gui.active_filter": "Активный фильтр: %s",
+  "autovault.gui.filter_empty": "(пусто — ничего не откроется)",
+  "autovault.gui.more_items": "+ еще %s предм.",
+  "autovault.hud.spinning_item": "§7В сокровищнице: §e%s§r",
+  "autovault.hud.spinning_item_wind_burst": "§7В сокровищнице: §a%s §e(Wind Burst)§r",
+  "autovault.chat.toggle": "[AutoVault] Авто-открытие: %s"
 }

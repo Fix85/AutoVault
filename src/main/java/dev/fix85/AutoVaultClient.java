@@ -43,8 +43,9 @@ public class AutoVaultClient implements ClientModInitializer {
                 Config.get().enabled = !Config.get().enabled;
                 Config.save();
                 if (client.player != null) {
+                    String stateStr = Config.get().enabled ? "§aON§r" : "§cOFF§r";
                     client.player.sendMessage(
-                            Text.literal("[AutoVault] Auto Vault: " + (Config.get().enabled ? "§aON§r" : "§cOFF§r")),
+                            Text.translatable("autovault.chat.toggle", stateStr),
                             true);
                 }
             }
