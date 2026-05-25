@@ -37,7 +37,6 @@ public class AutoVaultConfigScreen extends Screen {
     protected void init() {
         int cx = this.width / 2;
 
-        // --- ЛЕВАЯ КОЛОНКА: ОБЩИЕ НАСТРОЙКИ ---
         int leftX = cx - 180;
         int colW = 110;
 
@@ -60,8 +59,6 @@ public class AutoVaultConfigScreen extends Screen {
                 .dimensions(leftX, 105, colW, 20).build();
         addDrawableChild(ominousBtn);
 
-
-        // --- СРЕДНЯЯ КОЛОНКА: ПРЕСЕТЫ ФИЛЬТРА ---
         int midX = cx - 55;
         int midW = 110;
 
@@ -98,8 +95,6 @@ public class AutoVaultConfigScreen extends Screen {
         windBurstBtn.active = hasBook && Config.get().useFilter;
         addDrawableChild(windBurstBtn);
 
-
-        // --- ПРАВАЯ КОЛОНКА: КАСТОМНЫЕ ПРЕДМЕТЫ ---
         int rightX = cx + 70;
         int rightW = 115;
 
@@ -124,7 +119,6 @@ public class AutoVaultConfigScreen extends Screen {
             refresh();
         }).dimensions(rightX, 80, rightW, 20).build());
 
-        // Динамический список добавленных предметов с кнопками быстрого удаления
         customItemsToDraw.clear();
         extraCustomCount = 0;
         int customY = 105;
@@ -158,7 +152,6 @@ public class AutoVaultConfigScreen extends Screen {
             }
         }
 
-        // Кнопка полной очистки
         addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.clear_list"), b -> {
             Config.get().filter.removeIf(id -> 
                 !id.equals("minecraft:trident") && !id.equals("minecraft:mace") &&
@@ -168,8 +161,6 @@ public class AutoVaultConfigScreen extends Screen {
             refresh();
         }).dimensions(rightX, 170, rightW, 20).build());
 
-
-        // --- КНОПКИ ДЕЙСТВИЙ (САМЫЙ НИЗ) ---
         addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.reset"), b -> {
             Config.resetToDefaults();
             refresh();
@@ -214,7 +205,6 @@ public class AutoVaultConfigScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         int cx = this.width / 2;
 
-        // Заголовки над группами
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, cx, 12, 0xFFFFFF);
         
         context.drawCenteredTextWithShadow(this.textRenderer, Text.translatable("autovault.gui.general"), cx - 125, 42, 0xAAAAAA);
@@ -227,7 +217,6 @@ public class AutoVaultConfigScreen extends Screen {
                     cx + 127, 160, 0x888888);
         }
 
-        // Текст текущего списка фильтров
         String filterText = Config.get().filter.isEmpty()
                 ? Text.translatable("autovault.gui.filter_empty").getString()
                 : String.join(", ", Config.get().filter);

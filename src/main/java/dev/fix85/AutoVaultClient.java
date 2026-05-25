@@ -34,10 +34,8 @@ public class AutoVaultClient implements ClientModInitializer {
                 KeyBinding.Category.MISC
         ));
 
-        // основной тик: ищем vault и активируем
         ClientTickEvents.END_CLIENT_TICK.register(VaultAutoOpener::onClientTick);
 
-        // обработка кнопок
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (toggleKey.wasPressed()) {
                 Config.get().enabled = !Config.get().enabled;

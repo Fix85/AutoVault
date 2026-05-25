@@ -12,15 +12,15 @@ import java.util.Set;
 
 public class Config {
     public boolean enabled = true;
-    /** Если true — фильтр работает: открываем vault только если выпадет предмет из набора. */
+    
     public boolean useFilter = true;
-    /** Идентификаторы предметов через запятую, например: minecraft:trident, minecraft:mace, minecraft:enchanted_book */
+    
     public Set<String> filter = new LinkedHashSet<>();
-    /** Только для книг: проверять что зачарование Wind Burst присутствует. */
+    
     public boolean requireWindBurstOnBook = true;
-    /** Открывать ominous vault'ы. */
+    
     public boolean openOminous = true;
-    /** Открывать обычные vault'ы. */
+    
     public boolean openNormal = true;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

@@ -23,12 +23,6 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-/**
- * Каждый client tick:
- *  - Проверяет, наведён ли курсор игрока на активный сейф (Vault).
- *  - Если наведён — выводит название крутящегося предмета над хотбаром.
- *  - Если в руке подходящий ключ, фильтр пройден и нет кулдауна — имитирует нажатие мыши (с анимацией руки).
- */
 public final class VaultAutoOpener {
     private static int cooldown = 0;
 
@@ -42,7 +36,6 @@ public final class VaultAutoOpener {
         World world = client.world;
         if (player == null || world == null) return;
 
-        // Определяем, куда наведён курсор
         HitResult hitResult = client.crosshairTarget;
         if (!(hitResult instanceof BlockHitResult blockHit)) return;
 
@@ -57,14 +50,12 @@ public final class VaultAutoOpener {
         if (ominous && !Config.get().openOminous) return;
         if (!ominous && !Config.get().openNormal) return;
 
-        // Выводим предмет над хотбаром
         String itemId = getDisplayItemId(world, pos);
         if (itemId != null && !itemId.isEmpty()) {
             net.minecraft.util.Identifier id = net.minecraft.util.Identifier.tryParse(itemId);
             if (id != null && Registries.ITEM.containsId(id)) {
                 Text itemName = Registries.ITEM.get(id).getName();
-                
-                // Проверяем наличие Wind Burst на книге
+
                 boolean isWindBurstBook = false;
                 if ("minecraft:enchanted_book".equals(itemId)) {
                     BlockEntity be = world.getBlockEntity(pos);
@@ -92,7 +83,6 @@ public final class VaultAutoOpener {
             }
         }
 
-        // Активация
         if (cooldown > 0) return;
 
         Hand keyHand = findKeyHand(player);
@@ -104,8 +94,8 @@ public final class VaultAutoOpener {
                 if (client.interactionManager != null) {
                     ActionResult actionResult = client.interactionManager.interactBlock(player, keyHand, blockHit);
                     if (actionResult.isAccepted()) {
-                        player.swingHand(keyHand); // Анимация взмаха руки
-                        cooldown = 8; // Кулдаун полсекунды
+                        player.swingHand(keyHand); 
+                        cooldown = 8; 
                     }
                 }
             }
@@ -129,9 +119,6 @@ public final class VaultAutoOpener {
         return stack.isOf(Items.TRIAL_KEY);
     }
 
-    /**
-     * Читает ID отображаемого предмета в Vault
-     */
     private static String getDisplayItemId(World world, BlockPos pos) {
         BlockEntity be = world.getBlockEntity(pos);
         if (!(be instanceof VaultBlockEntity vault)) return null;
@@ -155,9 +142,6 @@ public final class VaultAutoOpener {
         return item.getString("id").orElse("");
     }
 
-    /**
-     * Проверяет, проходит ли отображаемый предмет фильтр
-     */
     private static boolean displayItemPassesFilter(World world, BlockPos pos) {
         String itemId = getDisplayItemId(world, pos);
         if (itemId == null || itemId.isEmpty()) return false;
