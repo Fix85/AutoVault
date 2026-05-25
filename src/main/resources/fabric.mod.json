@@ -12,7 +12,7 @@
     "sources": "https://github.com/Fix85/AutoVault"
   },
   "license": "MIT",
-  "icon": "icon.png",
+  "icon": "assets/autovault/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
