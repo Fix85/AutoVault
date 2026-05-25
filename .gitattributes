@@ -1,0 +1,13 @@
+# Ensure CRLF/LF line endings are consistent
+* text=auto
+
+# Declare files that will always have LF line endings on checkout.
+*.java text eol=lf
+*.gradle text eol=lf
+*.properties text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jar binary

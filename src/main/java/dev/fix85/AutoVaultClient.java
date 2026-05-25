@@ -1,0 +1,58 @@
+package dev.fix85;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
+import org.lwjgl.glfw.GLFW;
+
+import dev.fix85.gui.AutoVaultConfigScreen;
+
+public class AutoVaultClient implements ClientModInitializer {
+    public static final String MOD_ID = "autovault";
+
+    public static KeyBinding toggleKey;
+    public static KeyBinding openGuiKey;
+
+    @Override
+    public void onInitializeClient() {
+        Config.load();
+
+        toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.autovault.toggle",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_G,
+                KeyBinding.Category.MISC
+        ));
+
+        openGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.autovault.open_gui",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_K,
+                KeyBinding.Category.MISC
+        ));
+
+        // основной тик: ищем vault и активируем
+        ClientTickEvents.END_CLIENT_TICK.register(VaultAutoOpener::onClientTick);
+
+        // обработка кнопок
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (toggleKey.wasPressed()) {
+                Config.get().enabled = !Config.get().enabled;
+                Config.save();
+                if (client.player != null) {
+                    client.player.sendMessage(
+                            Text.literal("[AutoVault] Auto Vault: " + (Config.get().enabled ? "§aON§r" : "§cOFF§r")),
+                            true);
+                }
+            }
+            while (openGuiKey.wasPressed()) {
+                if (client.currentScreen == null) {
+                    client.setScreen(new AutoVaultConfigScreen(null));
+                }
+            }
+        });
+    }
+}

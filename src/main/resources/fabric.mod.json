@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "autovault",
+  "version": "${version}",
+  "name": "Auto Vault",
+  "description": "Automatically opens vaults in trial chambers and filters dropped items (trident, mace, heavy core, enchanted books, etc.). / Автоматически открывает сейфы (vaults) в испытательных комнатах и фильтрует выпадающие предметы.",
+  "authors": [
+    "Fix85"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Fix85/AutoVault",
+    "sources": "https://github.com/Fix85/AutoVault"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.fix85.AutoVaultClient"
+    ]
+  },
+  "mixins": [
+    "autovault.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
