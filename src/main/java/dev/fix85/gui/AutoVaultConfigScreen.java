@@ -4,6 +4,7 @@ import dev.fix85.Config;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -46,17 +47,22 @@ public class AutoVaultConfigScreen extends Screen {
                     refresh();
                 })
                 .dimensions(leftX, 55, colW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.enabled")))
                 .build();
         addDrawableChild(enabledBtn);
 
         normalBtn = ButtonWidget.builder(buildOnOff("autovault.gui.normal_vaults", Config.get().openNormal),
                 b -> { Config.get().openNormal = !Config.get().openNormal; refresh(); })
-                .dimensions(leftX, 80, colW, 20).build();
+                .dimensions(leftX, 80, colW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.normal")))
+                .build();
         addDrawableChild(normalBtn);
 
         ominousBtn = ButtonWidget.builder(buildOnOff("autovault.gui.ominous_vaults", Config.get().openOminous),
                 b -> { Config.get().openOminous = !Config.get().openOminous; refresh(); })
-                .dimensions(leftX, 105, colW, 20).build();
+                .dimensions(leftX, 105, colW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.ominous")))
+                .build();
         addDrawableChild(ominousBtn);
 
         int midX = cx - 55;
@@ -64,34 +70,46 @@ public class AutoVaultConfigScreen extends Screen {
 
         filterBtn = ButtonWidget.builder(buildOnOff("autovault.gui.use_filter", Config.get().useFilter),
                 b -> { Config.get().useFilter = !Config.get().useFilter; refresh(); })
-                .dimensions(midX, 55, midW, 20).build();
+                .dimensions(midX, 55, midW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.use_filter")))
+                .build();
         addDrawableChild(filterBtn);
 
         int itemW = 53;
         tridentBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.trident", "minecraft:trident"),
                 b -> { toggleItem("minecraft:trident"); refresh(); })
-                .dimensions(midX, 80, itemW, 20).build();
+                .dimensions(midX, 80, itemW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.trident")))
+                .build();
         addDrawableChild(tridentBtn);
 
         maceBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.mace", "minecraft:mace"),
                 b -> { toggleItem("minecraft:mace"); refresh(); })
-                .dimensions(midX + 57, 80, itemW, 20).build();
+                .dimensions(midX + 57, 80, itemW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.mace")))
+                .build();
         addDrawableChild(maceBtn);
 
         heavyCoreBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.core", "minecraft:heavy_core"),
                 b -> { toggleItem("minecraft:heavy_core"); refresh(); })
-                .dimensions(midX, 105, itemW, 20).build();
+                .dimensions(midX, 105, itemW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.core")))
+                .build();
         addDrawableChild(heavyCoreBtn);
 
         bookBtn = ButtonWidget.builder(buildItemLabel("autovault.gui.book", "minecraft:enchanted_book"),
                 b -> { toggleItem("minecraft:enchanted_book"); refresh(); })
-                .dimensions(midX + 57, 105, itemW, 20).build();
+                .dimensions(midX + 57, 105, itemW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.book")))
+                .build();
         addDrawableChild(bookBtn);
 
         boolean hasBook = Config.get().filter.contains("minecraft:enchanted_book");
         windBurstBtn = ButtonWidget.builder(buildOnOff("autovault.gui.wind_burst_only", Config.get().requireWindBurstOnBook),
                 b -> { Config.get().requireWindBurstOnBook = !Config.get().requireWindBurstOnBook; refresh(); })
-                .dimensions(midX, 130, midW, 20).build();
+                .dimensions(midX, 130, midW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.wind_burst")))
+                .build();
         windBurstBtn.active = hasBook && Config.get().useFilter;
         addDrawableChild(windBurstBtn);
 
@@ -117,7 +135,9 @@ public class AutoVaultConfigScreen extends Screen {
             }
             customItemField.setText("");
             refresh();
-        }).dimensions(rightX, 80, rightW, 20).build());
+        }).dimensions(rightX, 80, rightW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.add_remove_btn")))
+                .build());
 
         customItemsToDraw.clear();
         extraCustomCount = 0;
@@ -159,15 +179,20 @@ public class AutoVaultConfigScreen extends Screen {
             );
             Config.save();
             refresh();
-        }).dimensions(rightX, 170, rightW, 20).build());
+        }).dimensions(rightX, 170, rightW, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.clear_list")))
+                .build());
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.reset"), b -> {
             Config.resetToDefaults();
             refresh();
-        }).dimensions(cx - 110, 205, 105, 20).build());
+        }).dimensions(cx - 110, 205, 105, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.reset")))
+                .build());
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("autovault.gui.done"), b -> close())
                 .dimensions(cx + 5, 205, 105, 20)
+                .tooltip(Tooltip.of(Text.translatable("autovault.gui.tooltip.done")))
                 .build());
     }
 
