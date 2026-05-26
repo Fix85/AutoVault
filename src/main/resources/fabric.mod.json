@@ -8,8 +8,9 @@
     "Fix85"
   ],
   "contact": {
-    "homepage": "https://github.com/Fix85/AutoVault",
-    "sources": "https://github.com/Fix85/AutoVault"
+    "homepage": "https://modrinth.com/mod/auto-vault",
+    "sources": "https://github.com/Fix85/AutoVault",
+    "issues": "https://github.com/Fix85/AutoVault/issues"
   },
   "license": "MIT",
   "icon": "assets/autovault/icon.png",
