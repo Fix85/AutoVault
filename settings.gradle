@@ -9,4 +9,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'danjmod'
+// Should match your modid
+rootProject.name = 'autovault'

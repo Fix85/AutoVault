@@ -1,11 +1,11 @@
 package dev.fix85;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
 import dev.fix85.gui.AutoVaultConfigScreen;
@@ -13,42 +13,41 @@ import dev.fix85.gui.AutoVaultConfigScreen;
 public class AutoVaultClient implements ClientModInitializer {
     public static final String MOD_ID = "autovault";
 
-    public static KeyBinding toggleKey;
-    public static KeyBinding openGuiKey;
+    public static KeyMapping toggleKey;
+    public static KeyMapping openGuiKey;
 
     @Override
     public void onInitializeClient() {
         Config.load();
 
-        toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        toggleKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.autovault.toggle",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_G,
-                KeyBinding.Category.MISC
+                KeyMapping.Category.MISC
         ));
 
-        openGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        openGuiKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.autovault.open_gui",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_K,
-                KeyBinding.Category.MISC
+                KeyMapping.Category.MISC
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(VaultAutoOpener::onClientTick);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (toggleKey.wasPressed()) {
+            while (toggleKey.consumeClick()) {
                 Config.get().enabled = !Config.get().enabled;
                 Config.save();
                 if (client.player != null) {
                     String stateStr = Config.get().enabled ? "§aON§r" : "§cOFF§r";
-                    client.player.sendMessage(
-                            Text.translatable("autovault.chat.toggle", stateStr),
-                            true);
+                    client.player.sendOverlayMessage(
+                            Component.translatable("autovault.chat.toggle", stateStr));
                 }
             }
-            while (openGuiKey.wasPressed()) {
-                if (client.currentScreen == null) {
+            while (openGuiKey.consumeClick()) {
+                if (client.screen == null) {
                     client.setScreen(new AutoVaultConfigScreen(null));
                 }
             }

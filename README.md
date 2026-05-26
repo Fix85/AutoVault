@@ -2,6 +2,9 @@
 
 [English](#english) | [Русский](#русский)
 
+> **This branch (`mc-26.1`)** targets **Minecraft 26.1.2** with **Fabric Loader 0.19.2** on **Java 25** (uses official Mojang mappings).
+> The `mc-1.21.11` branch contains the same mod for Minecraft 1.21.11 / Java 21.
+
 ---
 
 ## English
