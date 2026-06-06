@@ -24,14 +24,14 @@ public class AutoVaultClient implements ClientModInitializer {
                 "key.autovault.toggle",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_G,
-                KeyBinding.Category.MISC
+                KeyBinding.MISC_CATEGORY
         ));
 
         openGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.autovault.open_gui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_K,
-                KeyBinding.Category.MISC
+                KeyBinding.MISC_CATEGORY
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(VaultAutoOpener::onClientTick);

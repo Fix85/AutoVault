@@ -62,11 +62,13 @@ public final class VaultAutoOpener {
                     if (be instanceof VaultBlockEntity vault) {
                         try {
                             NbtCompound nbt = vault.createNbtWithIdentifyingData(world.getRegistryManager());
-                            Optional<NbtCompound> sharedOpt = nbt.getCompound("shared_data");
-                            if (sharedOpt.isPresent()) {
-                                Optional<NbtCompound> itemOpt = sharedOpt.get().getCompound("display_item");
-                                if (itemOpt.isPresent() && hasWindBurst(itemOpt.get())) {
-                                    isWindBurstBook = true;
+                            if (nbt.contains("shared_data")) {
+                                NbtCompound shared = nbt.getCompound("shared_data");
+                                if (shared.contains("display_item")) {
+                                    NbtCompound item = shared.getCompound("display_item");
+                                    if (hasWindBurst(item)) {
+                                        isWindBurstBook = true;
+                                    }
                                 }
                             }
                         } catch (Throwable ignored) {}
@@ -131,15 +133,13 @@ public final class VaultAutoOpener {
             return null;
         }
 
-        Optional<NbtCompound> sharedOpt = nbt.getCompound("shared_data");
-        if (sharedOpt.isEmpty()) return null;
-        NbtCompound shared = sharedOpt.get();
+        if (!nbt.contains("shared_data")) return null;
+        NbtCompound shared = nbt.getCompound("shared_data");
 
-        Optional<NbtCompound> itemOpt = shared.getCompound("display_item");
-        if (itemOpt.isEmpty()) return null;
-        NbtCompound item = itemOpt.get();
+        if (!shared.contains("display_item")) return null;
+        NbtCompound item = shared.getCompound("display_item");
 
-        return item.getString("id").orElse("");
+        return item.getString("id");
     }
 
     private static boolean displayItemPassesFilter(World world, BlockPos pos) {
@@ -159,11 +159,11 @@ public final class VaultAutoOpener {
                 DynamicRegistryManager drm = world.getRegistryManager();
                 try {
                     NbtCompound nbt = vault.createNbtWithIdentifyingData(drm);
-                    Optional<NbtCompound> sharedOpt = nbt.getCompound("shared_data");
-                    if (sharedOpt.isPresent()) {
-                        Optional<NbtCompound> itemOpt = sharedOpt.get().getCompound("display_item");
-                        if (itemOpt.isPresent()) {
-                            return hasWindBurst(itemOpt.get());
+                    if (nbt.contains("shared_data")) {
+                        NbtCompound shared = nbt.getCompound("shared_data");
+                        if (shared.contains("display_item")) {
+                            NbtCompound item = shared.getCompound("display_item");
+                            return hasWindBurst(item);
                         }
                     }
                 } catch (Throwable ignored) {}
@@ -175,18 +175,13 @@ public final class VaultAutoOpener {
     }
 
     private static boolean hasWindBurst(NbtCompound item) {
-        Optional<NbtCompound> compsOpt = item.getCompound("components");
-        if (compsOpt.isEmpty()) return false;
-        NbtCompound comps = compsOpt.get();
+        if (!item.contains("components")) return false;
+        NbtCompound comps = item.getCompound("components");
 
-        Optional<NbtCompound> storedOpt = comps.getCompound("minecraft:stored_enchantments");
-        if (storedOpt.isEmpty()) {
-            return false;
-        }
-        NbtCompound stored = storedOpt.get();
+        if (!comps.contains("minecraft:stored_enchantments")) return false;
+        NbtCompound stored = comps.getCompound("minecraft:stored_enchantments");
 
-        Optional<NbtCompound> levelsOpt = stored.getCompound("levels");
-        NbtCompound levels = levelsOpt.orElse(stored);
+        NbtCompound levels = stored.contains("levels") ? stored.getCompound("levels") : stored;
         return levels.contains("minecraft:wind_burst");
     }
 }
